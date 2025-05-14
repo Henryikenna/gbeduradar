@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../firebaseConfig'; 
+import { auth, db } from '../firebaseConfig'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import logo from "../assets/logo.svg";
 import { toast } from 'sonner';
+import { doc, getDoc } from 'firebase/firestore';
 
 
 function LoginPage() {
@@ -27,6 +28,10 @@ function LoginPage() {
     try {
       // Sign in with Firebase
       // await signInWithEmailAndPassword(auth, email, password);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+      const docSnap = await getDoc(doc(db, "users", user.uid));
+      console.log("LOGGED IN USER docSnap", docSnap);
 
       // On successful login, Firebase auth state listener (which we'll set up later, e.g., in App.js or a context)
       // will typically handle redirecting the user or updating the UI.
@@ -139,9 +144,6 @@ function LoginPage() {
           </Link>
         </p>
       </div>
-       {/* <Link to="/" className="mt-8 text-xs text-brand-primary hover:underline dark:text-dark-text-secondary dark:hover:text-dark-text">
-        &larr; Back to Landing Page
-      </Link> */}
     </div>
   );
 }

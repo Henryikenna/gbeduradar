@@ -5,8 +5,12 @@ import { BiSolidSelectMultiple } from "react-icons/bi";
 import { GrSelect } from "react-icons/gr";
 import { GiRingingBell } from "react-icons/gi";
 import { RxUpdate } from "react-icons/rx";
+import { useAuth } from "../contexts/AuthContext";
+import { FaArrowRightLong, FaArrowRightToBracket } from "react-icons/fa6";
 
 const LandingPage = () => {
+  const { profile, logout } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-bg text-text">
       {/* Header */}
@@ -16,20 +20,38 @@ const LandingPage = () => {
             <img src={logo} alt="GbeduRadar Logo" className="h-12" />
             {/* GbeduRadar */}
           </Link>
-          <nav className="space-x-4">
-            <Link
-              to="/login"
-              className="px-8 py-2 rounded-full text-base font-medium text-bg bg-white"
+
+          {profile ? (
+            <div className="flex items-center gap-3">
+              <Link
+              to="/home"
+              className="flex items-center gap-2 bg-brand-primary/50 px-4 py-2 rounded-full"
             >
-              Login
+              <div className="text-base">
+                Welcome,{" "}
+                <span className="font-semibold"> {profile.displayName}</span>
+              </div>
+              <FaArrowRightLong />
             </Link>
-            <Link
-              to="/register"
-              className="px-6 py-2 rounded-full text-base font-medium text-white bg-brand-primary"
-            >
-              Register
-            </Link>
-          </nav>
+
+            <button onClick={logout} className="flex items-center gap-1 bg-red-500 px-3 py-1.5 rounded-full">Log out <FaArrowRightToBracket /></button>
+            </div>
+          ) : (
+            <nav className="space-x-4">
+              <Link
+                to="/login"
+                className="px-8 py-2 rounded-full text-base font-medium text-bg bg-white"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-6 py-2 rounded-full text-base font-medium text-white bg-brand-primary"
+              >
+                Register
+              </Link>
+            </nav>
+          )}
         </div>
       </header>
 
@@ -226,7 +248,7 @@ const LandingPage = () => {
             >
               Privacy Policy
             </Link>
-            
+
             <Link
               to="/terms"
               className="text-xs text-brand-primary hover:underline"
