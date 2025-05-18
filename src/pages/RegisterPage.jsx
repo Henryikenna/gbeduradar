@@ -212,30 +212,6 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      // const userCredential = await createUserWithEmailAndPassword(
-      //   auth,
-      //   email,
-      //   password
-      // );
-      // const user = userCredential.user;
-      // await updateProfile(user, { displayName: name });
-
-      // const userDoc = doc(db, "users", user.uid);
-      // await setDoc(userDoc, {
-      //   uid: user.uid,
-      //   displayName: name,
-      //   email,
-      //   createdAt: serverTimestamp(),
-      //   followedArtists: selectedArtists.map((a) => ({
-      //     id: a.id,
-      //     name: a.name,
-      //     image: a.images[0]?.url || null,
-      //   })),
-      //   preferredGenres: selectedGenres,
-      //   subscriptionTier: "free",
-      //   notificationsEnabled: false,
-      // });
-
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -420,36 +396,6 @@ export default function RegisterPage() {
                 <h2 className="text-xl font-bold text-text mb-4">
                   Step 1: Choose Genres (Max 3)
                 </h2>
-                {/* {genresLoading ? (
-                  <div className="text-center py-4">Loading genres...</div>
-                ) : genresError ? (
-                  <div className="text-red-400 text-center py-4">{genresError}</div>
-                ) : (
-                  // <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div className="flex overflow-x-scroll gap-4"> */}
-                {/* {genreSeeds.slice(0, 20).map((genre) => ( */}
-                {/* {genreSeeds.map((genre) => (
-                      <button
-                        key={genre}
-                        onClick={() => toggleGenre(genre)}
-                        // className={`flex flex-col items-center py-3 px-1 rounded-lg border transition-colors cursor-pointer ${
-                        className={`flex flex-col items-center justify-center px-4 rounded-lg border transition-colors cursor-pointer ${
-                          selectedGenres.includes(genre)
-                            ? "border-brand-primary bg-opacity-20 bg-brand-primary"
-                            : "border-gray-600 hover:border-gray-400"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center mb-2 overflow-hidden">
-                          <span className="text-2xl text-text-secondary">{genre.slice(0, 1).toUpperCase()}</span>
-                        </div>
-                        <span className="text-sm text-text text-center capitalize">
-                          {genre}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )} */}
-
                 {genresLoading ? (
                   <div className="text-center py-4 text-text-secondary">
                     Loading genres...

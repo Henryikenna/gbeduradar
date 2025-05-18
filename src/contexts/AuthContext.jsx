@@ -21,13 +21,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // Subscribe to auth state
     const unsubscribe = onAuthStateChanged(auth, async fbUser => {
-    console.log("fbUser", fbUser);
+    // console.log("fbUser", fbUser);
       if (fbUser) {
         setUser(fbUser);
         // Fetch extra profile from Firestore
         const docRef = doc(db, "users", fbUser.uid);
+        // console.log("docRef", docRef);
         const snap = await getDoc(docRef);
+        // console.log("snap", snap);
         if (snap.exists()) {
+          // console.log("snap.data()", snap._document.data.value.mapValue.fields);
+          // console.log("snap.data() 2", snap.data());
           setProfile(snap.data());
         } else {
           setProfile(null);
@@ -44,6 +48,10 @@ export function AuthProvider({ children }) {
 
   // Expose login, logout, register helpers if you want:
   const logout = () => signOut(auth);
+
+
+  // console.log("USER", user);
+  // console.log("PROFILE", profile);
 
   const value = {
     user,

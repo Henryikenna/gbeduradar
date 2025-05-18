@@ -851,7 +851,7 @@
 
 // export default HomePage;
 
-// src/pages/HomePage.jsx
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SongCard from "../components/SongCard";
@@ -859,7 +859,8 @@ import SongCard from "../components/SongCard";
 import logo from "../assets/logo.svg";
 import { useAuth } from "../contexts/AuthContext";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { fetchFromSpotify } from "../utils/spotify"; // Assuming this is the correct import
+import { fetchFromSpotify } from "../utils/spotify";
+import { formatDateWithDay } from "../helpers/formatDateWithDay";
 
 function HomePage() {
   const { profile } = useAuth();
@@ -884,9 +885,9 @@ function HomePage() {
     useState("default");
 
   // Function to format date as YYYY-MM-DD
-  const formatDate = (date) => {
-    return date.toISOString().split("T")[0];
-  };
+  // const formatDate = (date) => {
+  //   return date.toISOString().split("T")[0];
+  // };
 
   // Helper function to throttle API requests
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -919,8 +920,8 @@ function HomePage() {
     try {
       const today = new Date();
       const fiveDaysAgo = new Date(today);
-      // fiveDaysAgo.setDate(today.getDate() - 5);
-      fiveDaysAgo.setDate(today.getDate() - 6);
+      fiveDaysAgo.setDate(today.getDate() - 5);
+      // fiveDaysAgo.setDate(today.getDate() - 6);
 
       const tomorrow = new Date(today);
       tomorrow.setDate(today.getDate() + 1);
@@ -987,8 +988,8 @@ function HomePage() {
         // Categorize releases
         allArtistAlbums.forEach((album) => {
           const releaseDate = new Date(album.releaseDate);
-          const isToday = formatDate(releaseDate) === formatDate(today);
-          const isTomorrow = formatDate(releaseDate) === formatDate(tomorrow);
+          const isToday = formatDateWithDay(releaseDate) === formatDateWithDay(today);
+          const isTomorrow = formatDateWithDay(releaseDate) === formatDateWithDay(tomorrow);
           const isWithinPastFiveDays =
             releaseDate >= fiveDaysAgo && releaseDate <= today;
           const isAnnounced =
@@ -997,7 +998,7 @@ function HomePage() {
           if (isAnnounced) {
             announcedReleases.push({
               ...album,
-              announcedDate: formatDate(
+              announcedDate: formatDateWithDay(
                 new Date(
                   today.getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000
                 )
@@ -1098,8 +1099,8 @@ function HomePage() {
             if (existingAlbumIds.has(album.id)) return;
 
             const releaseDate = new Date(album.releaseDate);
-            const isToday = formatDate(releaseDate) === formatDate(today);
-            const isTomorrow = formatDate(releaseDate) === formatDate(tomorrow);
+            const isToday = formatDateWithDay(releaseDate) === formatDateWithDay(today);
+            const isTomorrow = formatDateWithDay(releaseDate) === formatDateWithDay(tomorrow);
             const isWithinPastFiveDays =
               releaseDate >= fiveDaysAgo && releaseDate <= today;
             const isAnnounced =
@@ -1108,7 +1109,7 @@ function HomePage() {
             if (isAnnounced) {
               announcedReleases.push({
                 ...album,
-                announcedDate: formatDate(
+                announcedDate: formatDateWithDay(
                   new Date(
                     today.getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000
                   )
@@ -1468,8 +1469,8 @@ function HomePage() {
                 <div className="flex items-center gap-2">
                   {" "}
                   <img className="w-8 h-8" src="./fire_img.png" alt="" /> Live
-                  {/* Now (Last 5 Days) */}
-                  Now (Last 6 Days)
+                  Now (Last 5 Days)
+                  {/* Now (Last 6 Days) */}
                 </div>
               );
 

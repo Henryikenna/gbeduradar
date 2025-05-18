@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFire } from "react-icons/fa";
 import { FaThumbsUp } from "react-icons/fa6";
+import { formatDateWithDay } from "../helpers/formatDateWithDay";
 
 function SongCard({ release, type }) {
   // type can be 'announced', 'releasing_tomorrow', 'live_now'
@@ -26,14 +27,25 @@ function SongCard({ release, type }) {
     // 4. Potentially re-fetching or locally updating the UI to reflect the new vote count/status.
   };
 
+  // let dateInfo;
+  // if (type === "announced") {
+  //   dateInfo = `Announced: ${announcedDate} | Releasing: ${releaseDate}`;
+  // } else if (type === "releasing_tomorrow") {
+  //   dateInfo = `Releasing: ${releaseDate} (Tomorrow!)`;
+  // } else {
+  //   // live_now
+  //   dateInfo = `Released: ${releaseDate}`;
+  // }
+
   let dateInfo;
   if (type === "announced") {
-    dateInfo = `Announced: ${announcedDate} | Releasing: ${releaseDate}`;
+    dateInfo = `Announced: ${formatDateWithDay(
+      announcedDate
+    )} | Releasing: ${formatDateWithDay(releaseDate)}`;
   } else if (type === "releasing_tomorrow") {
-    dateInfo = `Releasing: ${releaseDate} (Tomorrow!)`;
+    dateInfo = `Releasing: ${formatDateWithDay(releaseDate)} (Tomorrow!)`;
   } else {
-    // live_now
-    dateInfo = `Released: ${releaseDate}`;
+    dateInfo = `Released: ${formatDateWithDay(releaseDate)}`;
   }
 
   return (
